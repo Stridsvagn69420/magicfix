@@ -20,13 +20,13 @@ enum MagicResult magicfix_wav(char *buf) {
 	if (BUFLEN(buf) > 11) {
 		return
 			!(buf[0] == 0x52     // R
-        	&& buf[1] == 0x49    // I
-        	&& buf[2] == 0x46    // F
-        	&& buf[3] == 0x46    // F
-        	&& buf[8] == 0x57    // W
-        	&& buf[9] == 0x41    // A
-        	&& buf[10] == 0x56   // v
-        	&& buf[11] == 0x45); // E
+			&& buf[1] == 0x49    // I
+			&& buf[2] == 0x46    // F
+			&& buf[3] == 0x46    // F
+			&& buf[8] == 0x57    // W
+			&& buf[9] == 0x41    // A
+			&& buf[10] == 0x56   // v
+			&& buf[11] == 0x45); // E
 	} else {
 		return MagicBuffErr;
 	}
@@ -36,9 +36,9 @@ enum MagicResult magicfix_flac(char *buf) {
 	if (BUFLEN(buf) > 3) {
 		return
 			!(buf[0] == 0x66    // f
-        	&& buf[1] == 0x4C   // L
-        	&& buf[2] == 0x61   // a
-        	&& buf[3] == 0x43); // C
+			&& buf[1] == 0x4C   // L
+			&& buf[2] == 0x61   // a
+			&& buf[3] == 0x43); // C
 	} else {
 		return MagicBuffErr;
 	}
@@ -64,13 +64,13 @@ enum MagicResult magicfix_oggopus(char *buf) {
 			&& buf[2] == 0x67    // g
 			&& buf[3] == 0x53    // S
 			&& buf[28] == 0x4F   // O
-	        && buf[29] == 0x70   // p
-    	    && buf[30] == 0x75   // u
-        	&& buf[31] == 0x73   // s
-	        && buf[32] == 0x48   // H
-    	    && buf[33] == 0x65   // e
-        	&& buf[34] == 0x61   // a
-        	&& buf[35] == 0x64); // d
+			&& buf[29] == 0x70   // p
+			&& buf[30] == 0x75   // u
+			&& buf[31] == 0x73   // s
+			&& buf[32] == 0x48   // H
+			&& buf[33] == 0x65   // e
+			&& buf[34] == 0x61   // a
+			&& buf[35] == 0x64); // d
 	} else {
 		return MagicBuffErr;
 	}

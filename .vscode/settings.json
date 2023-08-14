@@ -1,10 +1,8 @@
 {
-    "files.associations": {
-        "stdlib.h": "c",
-        "stdio.h": "c",
-        "windows.h": "c",
-        "global.h": "c",
-        "audio.h": "c",
-        "magicfix.h": "c"
-    }
+	"files.associations": {
+		"*.c": "c",
+		"*.h": "c",
+		"*.cpp": "cpp",
+		"*.hpp": "cpp"
+	}
 }

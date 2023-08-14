@@ -10,9 +10,9 @@ int main(int argc, char** argv) {
 
 	printf("Héllä Wörld\n");
 
-    unsigned char buff[3] = "ID3"; 
-    enum MagicResult result = magicfix_mp3(buff);
-    printf("MP3: %d\n", result);
+	unsigned char buff[3] = "ID3"; 
+	enum MagicResult result = magicfix_mp3(buff);
+	printf("MP3: %d\n", result);
 	
 	return EXIT_SUCCESS;
 }
