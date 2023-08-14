@@ -6,8 +6,8 @@ The tool only depends on the C Standard Libraries, as well as `windows.h` on Win
 
 ## Installation
 ### Windows
-WIP, but forget about Visual Studio and the MSVC compiler. Use GCC from MinGW and add it to your PATH, then open the project in Visual Studio Code.  
-Technically Visual Studio and MSVC works too, but basically no optimizations are made.
+WIP, but forget about Visual Studio and the MSVC compiler. Use UCRT GCC from MinGW and add it to your PATH, then open the project in Visual Studio Code.  
+Technically Visual Studio and MSVC works too, but basically no optimizations are made there for some reason...
 
 ### Linux
 WIP.

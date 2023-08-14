@@ -6,6 +6,10 @@ compile:
 	@cmake -DCMAKE_BUILD_TYPE=Release -B$(OUTDIR) -S.
 	@cmake --build $(OUTDIR) --config Release
 
+debug:
+	@cmake -DCMAKE_BUILD_TYPE=Debug -B$(OUTDIR) -S.
+	@cmake --build $(OUTDIR) --config Debug
+
 install:
 	@cp $(OUTDIR)/$(APPNAME) $(INSTALLDIR)/$(APPNAME)
 
