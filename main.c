@@ -10,11 +10,7 @@ int main(int argc, char** argv) {
 	SetConsoleOutputCP(CP_UTF8); // Windows UTF-8
 	#endif
 
-	printf("Héllô Wörld\n");
+	printf("Hallöchen, Welt! 🤯\n");
 
-	unsigned char buff[3] = "ID3"; 
-	enum MagicResult result = magicfix_mp3(buff);
-	printf("MP3: %d\n", result);
-	
 	return EXIT_SUCCESS;
 }
