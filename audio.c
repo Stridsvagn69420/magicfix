@@ -1,6 +1,6 @@
 #include "audio.h"
 
-enum MagicResult magicfix_aiff(char *buf) {
+enum MagicResult magicfix_aiff(uint8_t *buf) {
 	if (BUFLEN(buf) > 11) {
 		return 
 			!(buf[0] == 0x46     // F
@@ -16,7 +16,7 @@ enum MagicResult magicfix_aiff(char *buf) {
 	}	
 }
 
-enum MagicResult magicfix_wav(char *buf) {
+enum MagicResult magicfix_wav(uint8_t *buf) {
 	if (BUFLEN(buf) > 11) {
 		return
 			!(buf[0] == 0x52     // R
@@ -32,7 +32,7 @@ enum MagicResult magicfix_wav(char *buf) {
 	}
 }
 
-enum MagicResult magicfix_flac(char *buf) {
+enum MagicResult magicfix_flac(uint8_t *buf) {
 	if (BUFLEN(buf) > 3) {
 		return
 			!(buf[0] == 0x66    // f
@@ -44,7 +44,7 @@ enum MagicResult magicfix_flac(char *buf) {
 	}
 }
 
-enum MagicResult magicfix_ogg(char *buf) {
+enum MagicResult magicfix_ogg(uint8_t *buf) {
 	if (BUFLEN(buf) > 3) {
 		return
 			!(buf[0] == 0x4F    // O
@@ -56,7 +56,7 @@ enum MagicResult magicfix_ogg(char *buf) {
 	}
 }
 
-enum MagicResult magicfix_oggopus(char *buf) {
+enum MagicResult magicfix_oggopus(uint8_t *buf) {
 	if (BUFLEN(buf) > 35) {
 		return
 			!(buf[0] == 0x4F     // O
@@ -76,7 +76,7 @@ enum MagicResult magicfix_oggopus(char *buf) {
 	}
 }
 
-enum MagicResult magicfix_midi(char *buf) {
+enum MagicResult magicfix_midi(uint8_t *buf) {
 	if (BUFLEN(buf) > 3) {
 		return
 			!(buf[0] == 0x4F    // O
@@ -88,7 +88,7 @@ enum MagicResult magicfix_midi(char *buf) {
 	}
 }
 
-enum MagicResult magicfix_mp3(char *buf) {
+enum MagicResult magicfix_mp3(uint8_t *buf) {
 	if (BUFLEN(buf) > 2) {
 		bool id3 = buf[0] == 0x49 && buf[1] == 0x44 && buf[2] == 0x33; // ID3v2
 		bool mp3 = buf[0] == 0xFF && (buf[1] == 0xFB || buf[1] == 0xF3 || buf[1] == 0xF2); // No ID3 or ID3v1

@@ -1,6 +1,8 @@
 #ifdef _WIN32
 #include <windows.h> // MSVC
 #endif
+#include <stdio.h>
+#include <stdlib.h>
 #include "magicfix.h"
 
 int main(int argc, char** argv) {
@@ -8,7 +10,7 @@ int main(int argc, char** argv) {
 	SetConsoleOutputCP(CP_UTF8); // Windows UTF-8
 	#endif
 
-	printf("Héllä Wörld\n");
+	printf("Héllô Wörld\n");
 
 	unsigned char buff[3] = "ID3"; 
 	enum MagicResult result = magicfix_mp3(buff);

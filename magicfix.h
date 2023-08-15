@@ -2,8 +2,7 @@
 #define MAGICFIX_GLOBAL_H
 
 // C Standard Library
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdint.h>
 #include <stdbool.h>
 
 /// @brief char-Array Length Macro

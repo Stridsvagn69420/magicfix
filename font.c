@@ -1,6 +1,6 @@
 #include "font.h"
 
-enum MagicResult magicfix_woff(char *buf) {
+enum MagicResult magicfix_woff(uint8_t *buf) {
 	if (BUFLEN(buf) > 7) {
 		return
 			!(buf[0] == 0x77    // w
@@ -16,7 +16,7 @@ enum MagicResult magicfix_woff(char *buf) {
 	}
 }
 
-enum MagicResult magicfix_woff2(char *buf) {
+enum MagicResult magicfix_woff2(uint8_t *buf) {
 	if (BUFLEN(buf) > 7) {
 		return
 			!(buf[0] == 0x77    // w
@@ -32,7 +32,7 @@ enum MagicResult magicfix_woff2(char *buf) {
 	}
 }
 
-enum MagicResult magicfix_ttf(char *buf) {
+enum MagicResult magicfix_ttf(uint8_t *buf) {
 	if (BUFLEN(buf) > 4) {
 		return
 			!(buf[0] == 0x00    // NULL
@@ -45,7 +45,7 @@ enum MagicResult magicfix_ttf(char *buf) {
 	}
 }
 
-enum MagicResult magicfix_otf(char *buf) {
+enum MagicResult magicfix_otf(uint8_t *buf) {
 	if (BUFLEN(buf) > 4) {
 		return
 			!(buf[0] == 0x4F    // O
