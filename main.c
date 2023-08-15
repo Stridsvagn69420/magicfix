@@ -1,3 +1,4 @@
+#include "interface.h"
 #ifdef _WIN32
 #include <windows.h> // MSVC
 #endif
@@ -12,9 +13,10 @@ int main(int argc, char** argv) {
 
 	printf("Héllô Wörld\n");
 
-	unsigned char buff[3] = "ID3"; 
-	enum MagicResult result = magicfix_mp3(buff);
-	printf("MP3: %d\n", result);
-	
+	unsigned char buff[9] = ""; 
+	if(process(argv[1], buff) == MagicFalse)
+		printf("OPPS, we can't fix your file :(\n");
+	else
+	 	printf("%s", buff);
 	return EXIT_SUCCESS;
 }
