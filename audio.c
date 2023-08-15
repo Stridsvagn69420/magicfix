@@ -79,10 +79,10 @@ enum MagicResult magicfix_oggopus(uint8_t *buf) {
 enum MagicResult magicfix_midi(uint8_t *buf) {
 	if (BUFLEN(buf) > 3) {
 		return
-			!(buf[0] == 0x4F    // O
-			&& buf[1] == 0x67   // g
-			&& buf[2] == 0x67   // g
-			&& buf[3] == 0x53); // S
+			!(buf[0] == 0x4D    // M
+			&& buf[1] == 0x54   // T
+			&& buf[2] == 0x68   // h
+			&& buf[3] == 0x64); // d
 	} else {
 		return MagicBuffErr;
 	}
@@ -93,6 +93,30 @@ enum MagicResult magicfix_mp3(uint8_t *buf) {
 		bool id3 = buf[0] == 0x49 && buf[1] == 0x44 && buf[2] == 0x33; // ID3v2
 		bool mp3 = buf[0] == 0xFF && (buf[1] == 0xFB || buf[1] == 0xF3 || buf[1] == 0xF2); // No ID3 or ID3v1
 		return !(id3 || mp3);
+	} else {
+		return MagicBuffErr;
+	}
+}
+
+enum MagicResult magicfix_aac(uint8_t *buf) {
+	if (BUFLEN(buf) > 1) {
+		return !(buf[0] == 0xFF && (buf[1] == 0xF1 || buf[1] == 0xF9)); // AAC
+	} else {
+		return MagicBuffErr;
+	}
+}
+
+enum MagicResult magicfix_m4a(uint8_t *buf) {
+	if (BUFLEN(buf) > 11) {
+		return
+			!(buf[4] == 0x66     // f
+			&& buf[5] == 0x74    // t
+			&& buf[6] == 0x79    // y
+			&& buf[7] == 0x70    // p
+			&& buf[8] == 0x4D    // M
+			&& buf[9] == 0x34    // 4
+			&& buf[10] == 0x41   // A
+			&& buf[11] == 0x20); // .
 	} else {
 		return MagicBuffErr;
 	}

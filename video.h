@@ -21,6 +21,14 @@ enum MagicResult magicfix_mpeg(uint8_t *buf);
 
 /// @brief MP4 Video Matcher
 /// @return MagicResult
-enum MagicResult magicfix_mpeg(uint8_t *buf);
+enum MagicResult magicfix_mp4(uint8_t *buf);
+
+/// @brief M4V Video Matcher
+/// @return MagicResult
+enum MagicResult magicfix_m4v(uint8_t *buf);
+
+/// @brief MOV Video Matcher
+/// @return MagicResult
+enum MagicResult magicfix_mov(uint8_t *buf);
 
 #endif

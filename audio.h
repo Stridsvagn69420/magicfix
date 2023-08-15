@@ -31,4 +31,12 @@ enum MagicResult magicfix_midi(uint8_t *buf);
 /// @return MagicResult
 enum MagicResult magicfix_mp3(uint8_t *buf);
 
+/// @brief AAC Audio Matcher
+/// @return MagicResult
+enum MagicResult magicfix_aac(uint8_t *buf);
+
+/// @brief M4A Audio Matcher
+/// @return MagicResult
+enum MagicResult magicfix_m4a(uint8_t *buf);
+
 #endif

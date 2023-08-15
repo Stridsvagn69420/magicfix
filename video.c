@@ -53,10 +53,7 @@ enum MagicResult magicfix_mpeg(uint8_t *buf) {
 enum MagicResult magicfix_mp4(uint8_t *buf) {
 	if (BUFLEN(buf) > 11) {
 		return
-			!(buf[4] == 0x66    // f
-			&& buf[5] == 0x74   // t
-			&& buf[6] == 0x79   // y
-			&& buf[7] >= 0x70   // p
+			!(buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] >= 0x70 // ftyp
 			&& (
 				buf[8] == 0x61 && buf[9] == 0x76 && buf[10] == 0x63 && buf[11] == 0x31    // avc1
 				|| buf[8] == 0x64 && buf[9] == 0x61 && buf[10] == 0x73 && buf[11] == 0x68 // dash
@@ -64,14 +61,36 @@ enum MagicResult magicfix_mp4(uint8_t *buf) {
 				|| buf[8] == 0x6D && buf[9] == 0x70 && buf[10] == 0x34 && buf[11] == 0x32 // mp42
 				|| buf[8] == 0x6D && buf[9] == 0x70 && buf[10] == 0x37 && buf[11] == 0x31 // mp71
 				|| buf[8] == 0x6D && buf[9] == 0x6D && buf[10] == 0x70 && buf[11] == 0x34 // mmp4
-				|| buf[8] == 0x69 && buf[9] == 0x73 && buf[10] == 0x6F && buf[11] == 0x32 // iso2
-				|| buf[8] == 0x69 && buf[9] == 0x73 && buf[10] == 0x6F && buf[11] == 0x33 // iso3
-				|| buf[8] == 0x69 && buf[9] == 0x73 && buf[10] == 0x6F && buf[11] == 0x34 // iso4
-				|| buf[8] == 0x69 && buf[9] == 0x73 && buf[10] == 0x6F && buf[11] == 0x35 // iso5
-				|| buf[8] == 0x69 && buf[9] == 0x73 && buf[10] == 0x6F && buf[11] == 0x36 // iso6
 				|| buf[8] == 0x6D && buf[9] == 0x70 && buf[10] == 0x34 && buf[11] == 0x76 // mp4v
-				|| buf[8] == 0x6D && buf[9] == 0x73 && buf[10] == 0x6E && buf[11] == 0x76 // msnv
+				|| buf[8] == 0x4D && buf[9] == 0x53 && buf[10] == 0x4E && buf[11] == 0x56 // MSNV
 			)); 
+	} else {
+		return MagicBuffErr;
+	}
+}
+
+enum MagicResult magicfix_m4v(uint8_t *buf) {
+	if (BUFLEN(buf) > 11) {
+		return
+			!(buf[4] == 0x66     // f
+			&& buf[5] == 0x74    // t
+			&& buf[6] == 0x79    // y
+			&& buf[7] == 0x70    // p
+			&& buf[8] == 0x4D    // M
+			&& buf[9] == 0x34    // 4
+			&& buf[10] == 0x56   // V
+			&& buf[11] == 0x20); // .
+	} else {
+		return MagicBuffErr;
+	}
+}
+
+enum MagicResult magicfix_mov(uint8_t *buf) {
+	if (BUFLEN(buf) > 11) {
+		bool ftypqt = buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70 && buf[8] == 0x71 && buf[9] == 0x74 && buf[10] == 0x20 && buf[11] == 0x20; // ftypqt
+		bool moov = buf[4] == 0x6D && buf[5] == 0x6F && buf[6] == 0x6F && buf[7] == 0x76; // moov
+		bool free = buf[4] == 0x66 && buf[5] == 0x72 && buf[6] == 0x65 && buf[7] == 0x65; // free
+		return !(ftypqt || moov || free);
 	} else {
 		return MagicBuffErr;
 	}
