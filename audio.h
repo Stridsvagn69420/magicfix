@@ -1,7 +1,7 @@
 #ifndef MAGICFIX_AUDIO_H
 #define MAGICFIX_AUDIO_H
 
-#include "magicfix.h"
+#include "result.h"
 
 /// @brief AIFF Audio Matcher
 /// @return MagicResult

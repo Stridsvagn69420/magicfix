@@ -1,12 +1,40 @@
 #include "video.h"
 
 enum MagicResult magicfix_webm(uint8_t *buf) {
-	if (BUFLEN(buf) > 3) {
+	if (BUFLEN(buf) > 31) {
 		return
-			!(buf[0] == 0x1A    // .
-			&& buf[1] == 0x45   // E
-			&& buf[2] == 0xDF   // .
-			&& buf[3] == 0xA3); // .
+			!(buf[0] == 0x1A     // .
+			&& buf[1] == 0x45    // E
+			&& buf[2] == 0xDF    // .
+			&& buf[3] == 0xA3    // .
+			&& buf[24] == 0x77   // w
+			&& buf[25] == 0x65   // e
+			&& buf[26] == 0x62   // b
+			&& buf[27] == 0x6D   // m
+			&& buf[28] == 0x42   // B
+			&& buf[29] == 0x87   // .
+			&& buf[30] == 0x81   // .
+			&& buf[31] == 0x04); // .
+	} else {
+		return MagicBuffErr;
+	}
+}
+
+enum MagicResult magicfix_mkv(uint8_t *buf) {
+	if (BUFLEN(buf) > 31) {
+		return
+			!(buf[0] == 0x1A     // .
+			&& buf[1] == 0x45    // E
+			&& buf[2] == 0xDF    // .
+			&& buf[3] == 0xA3    // .
+			&& buf[24] == 0x6D   // m
+			&& buf[25] == 0x61   // a
+			&& buf[26] == 0x74   // t
+			&& buf[27] == 0x72   // r
+			&& buf[28] == 0x6F   // o
+			&& buf[29] == 0x73   // s
+			&& buf[30] == 0x6B   // k
+			&& buf[31] == 0x61); // a
 	} else {
 		return MagicBuffErr;
 	}

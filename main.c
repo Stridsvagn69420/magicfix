@@ -1,4 +1,3 @@
-#include "interface.h"
 #ifdef _WIN32
 #include <windows.h> // MSVC
 #endif
