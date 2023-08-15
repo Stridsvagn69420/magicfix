@@ -7,6 +7,10 @@
 /// @return MagicResult
 enum MagicResult magicfix_webm(uint8_t *buf);
 
+/// @brief MKV Video Matcher
+/// @return MagicResult
+enum MagicResult magicfix_mkv(uint8_t *buf);
+
 /// @brief AVI Video Matcher
 /// @return MagicResult
 enum MagicResult magicfix_avi(uint8_t *buf);
