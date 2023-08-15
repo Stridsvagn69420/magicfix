@@ -15,6 +15,10 @@ enum MagicResult magicfix_png(uint8_t *buf);
 /// @return MagicResult
 enum MagicResult magicfix_webp(uint8_t *buf);
 
+/// @brief BMP Image Matcher
+/// @return MagicResult
+enum MagicResult magicfix_bmp(uint8_t *buf);
+
 /// @brief TIFF Image Matcher
 /// @return MagicResult
 enum MagicResult magicfix_tiff(uint8_t *buf);

@@ -44,6 +44,15 @@ enum MagicResult magicfix_webp(uint8_t *buf) {
 	}
 }
 
+enum MagicResult magicfix_bmp(uint8_t *buf) {
+	if (BUFLEN(buf) > 1) {
+		return !(buf[0] == 0x42 // B
+			&& buf[1] == 0x4D); // M
+	} else {
+		return MagicBuffErr;
+	}
+}
+
 enum MagicResult magicfix_tiff(uint8_t *buf) {
 	if (BUFLEN(buf) > 3) {
 		bool le = buf[0] == 0x49 && buf[1] == 0x49 && buf[2] == 0x2A && buf[3] == 0x00; // Little-Edian
