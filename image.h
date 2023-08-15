@@ -1,7 +1,7 @@
 #ifndef MAGICFIX_IMAGE_H
 #define MAGICFIX_IMAGE_H
 
-#include "magicfix.h"
+#include "result.h"
 
 /// @brief EXR Image Matcher
 /// @return MagicResult

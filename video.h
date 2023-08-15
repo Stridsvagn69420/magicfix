@@ -1,7 +1,7 @@
 #ifndef MAGICFIX_VIDEO_H
 #define MAGICFIX_VIDEO_H
 
-#include "magicfix.h"
+#include "result.h"
 
 /// @brief WebM Video Matcher
 /// @return MagicResult

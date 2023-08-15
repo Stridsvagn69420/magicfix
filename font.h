@@ -1,7 +1,7 @@
 #ifndef MAGICFIX_FONT_H
 #define MAGICFIX_FONT_H
 
-#include "magicfix.h"
+#include "result.h"
 
 /// @brief WOFF Font Matcher
 /// @return MagicResult
