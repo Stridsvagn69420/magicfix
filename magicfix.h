@@ -19,8 +19,8 @@ struct FileTypeData {
 };
 
 // File Database
-#define FILEDBLEN 25 // File Database Length
-#define MAXREQBUFSIZE 36 //
+#define FILEDBLEN 32     // File Database Length
+#define MAXREQBUFSIZE 32 // Maximum required buffer size
 extern const struct FileTypeData fileTypeDb[FILEDBLEN];
 
 #endif

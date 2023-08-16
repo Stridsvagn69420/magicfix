@@ -114,7 +114,7 @@ static bool ttf(uint8_t *buf) {
 
 // OTF Font
 static bool otf(uint8_t *buf) {
-	return buf[0] == 0x4F && buf[1] == 0x54 && buf[2] == 0x54 && buf[3] == 0x4F && buf[4] == 0x00; // OTTO
+	return buf[0] == 0x4F && buf[1] == 0x54 && buf[2] == 0x54 && buf[3] == 0x4F; // OTTO
 }
 
 // WOFF2 Font
@@ -140,6 +140,56 @@ static bool webp(uint8_t *buf) {
 		&& buf[8] == 0x57 && buf[9] == 0x45 && buf[10] == 0x42 && buf[11] == 0x50; // WEBP
 }
 
+// HEIC Image
+static bool heic(uint8_t *buf) {
+	return buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70    // ftyp
+		&& buf[8] == 0x68 && buf[9] == 0x65 && buf[10] == 0x69 && buf[11] == 0x63; // heic
+}
+
+// AVIF Image
+static bool avif(uint8_t *buf) {
+	return buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70    // ftyp
+		&& buf[8] == 0x61 && buf[9] == 0x76 && buf[10] == 0x69 && buf[11] == 0x66; // avif
+}
+
+// JPEG Image
+static bool jpeg(uint8_t *buf) {
+	return buf[0] == 0xFF && buf[1] == 0xD8 && buf[2] == 0xFF;
+}
+
+// JPEG 2000 Image
+static bool jpeg2(uint8_t *buf) {
+	bool kp2 = buf[0] == 0xFF && buf[1] == 0x4F && buf[2] == 0xFF && buf[3] == 0x51;
+	bool jp2 = buf[0] == 0x00 && buf[1] == 0x00 && buf[2] == 0x00 && buf[3] == 0x0C
+		&& buf[4] == 0x6A && buf[5] == 0x50 && buf[6] == 0x20 && buf[7] == 0x20
+		&& buf[8] == 0x0D && buf[9] == 0x0A && buf[10] == 0x87 && buf[11] == 0x0A;
+	return jp2 || kp2;
+}
+
+// JPEG-XL Image
+static bool jpgxl(uint8_t *buf) {
+	bool kxl = buf[0] == 0xFF && buf[0] == 0x0A;
+	bool jxl = buf[0] == 0x00 && buf[1] == 0x00 && buf[2] == 0x00 && buf[3] == 0x0C
+		&& buf[4] == 0x4A && buf[5] == 0x58 && buf[6] == 0x4C && buf[7] == 0x20
+		&& buf[8] == 0x0D && buf[9] == 0x0A && buf[10] == 0x87 && buf[11] == 0x0A;
+	return jxl || kxl;
+}
+
+// JPEG-XS Image
+static bool jpgxs(uint8_t *buf) {
+	return buf[0] == 0xFF && buf[1] == 0x10 && buf[2] == 0xFF && buf[3] == 0x50;
+}
+
+// JPEG-XR Image
+static bool jpgxr(uint8_t *buf) {
+	return buf[0] == 0x49 && buf[1] == 0x49 && buf[2] == 0xBC && buf[3] == 0x01;
+}
+
+// QOI Image
+static bool qoif(uint8_t *buf) {
+	return buf[0] == 0x71 && buf[1] == 0x6F && buf[2] == 0x69 && buf[3] == 0x66; // qoif
+}
+
 // EXR Image
 static bool exr(uint8_t *buf) {
 	return buf[0] == 0x76 && buf[1] == 0x2F && buf[2] == 0x31 && buf[3] == 0x01; // v/1.
@@ -159,31 +209,38 @@ static bool tiff(uint8_t *buf) {
 
 /// @brief File Database
 const struct FileTypeData fileTypeDb[FILEDBLEN] = {
-	{ wav,  12, ".wav"   },
-	{ flac,  4, ".flac"  },
-	{ ogg,   4, ".ogg"   },
-	{ opus, 36, ".opus"  },
-	{ mp3,   3, ".mp3"   },
-	{ aac,   2, ".aac"   },
-	{ m4a,  12, ".m4a"   },
-	{ aiff, 12, ".aiff"  },
-	{ mp4,  12, ".mp4"   },
-	{ webm, 28, ".webm"  },
-	{ mkv,  32, ".mkv"   },
-	{ m4v,  12, ".m4v"   },
-	{ mov,  12, ".mov"   },
-	{ flv,   3, ".flv"   },
-	{ mpeg,  4, ".mpeg"  },
-	{ avi,   4, ".avi"   },
-	{ ttf,   5, ".ttf"   },
-	{ otf,   5, ".otf"   },
-	{ woff2, 8, ".woff2" },
-	{ woff,  8, ".woff"  },
-	{ png,   8, ".png"   },
-	{ webp, 12, ".webp"  },
-	{ exr,   4, ".exr"   },
-	{ bmp,   2, ".bmp"   },
-	{ tiff,  4, ".tiff"  }
+	{ wav,   12, ".wav"   },
+	{ flac,   4, ".flac"  },
+	{ ogg,    4, ".ogg"   },
+	{ opus,  36, ".opus"  },
+	{ mp3,    3, ".mp3"   },
+	{ aac,    2, ".aac"   },
+	{ m4a,   12, ".m4a"   },
+	{ aiff,  12, ".aiff"  },
+	{ mp4,   12, ".mp4"   },
+	{ webm,  28, ".webm"  },
+	{ mkv,   32, ".mkv"   },
+	{ m4v,   12, ".m4v"   },
+	{ mov,   12, ".mov"   },
+	{ flv,    3, ".flv"   },
+	{ mpeg,   4, ".mpeg"  },
+	{ avi,    4, ".avi"   },
+	{ ttf,    5, ".ttf"   },
+	{ otf,    4, ".otf"   },
+	{ woff2,  8, ".woff2" },
+	{ woff,   8, ".woff"  },
+	{ png,    8, ".png"   },
+	{ webp,  12, ".webp"  },
+	{ avif,  12, ".avif"  },
+	{ jpeg,   2, ".jpg"   },
+	{ jpeg2, 12, ".jp2"   },
+	{ jpgxl, 12, ".jxl"   },
+	{ jpgxs,  4, ".jxs"   },
+	{ jpgxr,  4, ".jxr"   },
+	{ qoif,   4, ".qoi"   },
+	{ exr,    4, ".exr"   },
+	{ bmp,    2, ".bmp"   },
+	{ tiff,   4, ".tiff"  }
 };
 
 // TODO: MAYBE add wrapper utils here, maybe not neccesary
