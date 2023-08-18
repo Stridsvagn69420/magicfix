@@ -1,5 +1,5 @@
 #ifdef _WIN32
-#include <windows.h> // MSVC
+#include <windows.h> // Windows-API
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,12 +10,38 @@ int main(int argc, char** argv) {
 	SetConsoleOutputCP(CP_UTF8); // Windows UTF-8
 	#endif
 
-	printf("Hallöchen, Welt! 🤯\n"); // UTF-8 Test
-
-	printf("Listing File Type Database...\n");
-	for (uint8_t i = 0; i < FILEDBLEN; i++) {
-		printf("Ext: %s, Size: %i\n", fileTypeDb[i].ext, fileTypeDb[i].minbuf);
+	if (argc < 2) {
+		printf("Please append a file!\n");
+		return EXIT_FAILURE;
 	}
 
-	return EXIT_SUCCESS;
+	FILE *fp = fopen(argv[1], "rb");
+	if (fp == NULL) {
+		printf("Failed to open %s\n", argv[1]);
+		return EXIT_FAILURE;
+	}
+
+	uint8_t filedata[MAXREQBUFSIZE];
+	fread(&filedata, sizeof(uint8_t), MAXREQBUFSIZE, fp);
+	if (ferror(fp)) {
+		printf("Error reading data from file stream!\n");
+		return EXIT_FAILURE;
+	}
+
+	bool found = false;
+	size_t foundpos;
+	for (size_t i = 0; i < FILEDBLEN; i++) {
+		if (fileTypeDb[i].match(filedata)) {
+			found = true;
+			foundpos = i;
+		}
+	}
+
+	if (found) {
+		printf("Recommended extension: %s\n", fileTypeDb[foundpos].ext);
+		return EXIT_SUCCESS;
+	} else {
+		printf("Could not determine type of provided file!\n");
+		return EXIT_FAILURE;
+	}
 }

@@ -35,8 +35,10 @@ static bool aac(uint8_t *buf) {
 
 // M4A Audio
 static bool m4a(uint8_t *buf) {
-	return buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70    // ftyp
-		&& buf[8] == 0x4D && buf[9] == 0x34 && buf[10] == 0x41 && buf[11] == 0x20; // M4A 
+	bool m4a = buf[8] == 0x4D && buf[9] == 0x34 && buf[10] == 0x41 && buf[11] == 0x20;  // M4A 
+	bool gp4 = buf[8] == 0x33 && buf[9] == 0x67 && buf[10] == 0x70 && buf[11] == 0x34; // 3gp4
+	return buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70 // ftyp
+		&& (m4a || gp4);
 }
 
 // MIDI Audio
