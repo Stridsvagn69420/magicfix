@@ -1,5 +1,10 @@
 #include "magicfix.h"
 
+// Quicktime Container
+static bool ftyp(uint8_t *buf) {
+	return buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70; // ftyp
+}
+
 // WAV Audio
 static bool wav(uint8_t *buf) {
 	return buf[0] == 0x52 && buf[1] == 0x49 && buf[2] == 0x46 && buf[3] == 0x46    // RIFF
@@ -35,10 +40,10 @@ static bool aac(uint8_t *buf) {
 
 // M4A Audio
 static bool m4a(uint8_t *buf) {
-	bool m4a = buf[8] == 0x4D && buf[9] == 0x34 && buf[10] == 0x41 && buf[11] == 0x20;  // M4A 
-	bool gp4 = buf[8] == 0x33 && buf[9] == 0x67 && buf[10] == 0x70 && buf[11] == 0x34; // 3gp4
-	return buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70 // ftyp
-		&& (m4a || gp4);
+	bool m4a = buf[10] == 0x41;  // M4A 
+	bool m4b = buf[10] == 0x42;  // M4B
+	bool m4p = buf[10] == 0x50;  // M4P
+	return ftyp(buf) && buf[8] == 0x4D && buf[9] == 0x34 && (m4a || m4b || m4p);
 }
 
 // MIDI Audio
@@ -54,11 +59,12 @@ static bool aiff(uint8_t *buf) {
 
 // MP4 Video
 static bool mp4(uint8_t *buf) {
-	return buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] >= 0x70 // ftyp
+	return ftyp(buf)
 		&& (
 			buf[8] == 0x61 && buf[9] == 0x76 && buf[10] == 0x63 && buf[11] == 0x31    // avc1
 			|| buf[8] == 0x64 && buf[9] == 0x61 && buf[10] == 0x73 && buf[11] == 0x68 // dash
 			|| buf[8] == 0x69 && buf[9] == 0x73 && buf[10] == 0x6F && buf[11] == 0x6D // isom
+			|| buf[8] == 0x69 && buf[9] == 0x73 && buf[10] == 0x6F && buf[11] == 0x32 // iso2
 			|| buf[8] == 0x6D && buf[9] == 0x70 && buf[10] == 0x34 && buf[11] == 0x32 // mp42
 			|| buf[8] == 0x6D && buf[9] == 0x70 && buf[10] == 0x37 && buf[11] == 0x31 // mp71
 			|| buf[8] == 0x6D && buf[9] == 0x6D && buf[10] == 0x70 && buf[11] == 0x34 // mmp4
@@ -81,13 +87,22 @@ static bool mkv(uint8_t *buf) {
 
 // M4V Video
 static bool m4v(uint8_t *buf) {
-	return buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70    // ftyp
-		&& buf[8] == 0x4D && buf[9] == 0x34 && buf[10] == 0x56 && buf[11] == 0x20; // M4V 
+	return ftyp(buf) && buf[8] == 0x4D && buf[9] == 0x34 && buf[10] == 0x56 && buf[11] == 0x20; // M4V 
+}
+
+// 3GPP Video
+static bool tgp(uint8_t *buf) {
+	return ftyp(buf) && buf[8] == 0x33 && buf[9] == 0x67 && buf[10] == 0x70; // 3g2
+}
+
+// 3GPP Video
+static bool tg2(uint8_t *buf) {
+	return ftyp(buf) && buf[8] == 0x33 && buf[9] == 0x67 && buf[10] == 0x32; // 3g2
 }
 
 // MOV Quicktime Video
 static bool mov(uint8_t *buf) {
-	bool ftypqt = buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70 && buf[8] == 0x71 && buf[9] == 0x74 && buf[10] == 0x20 && buf[11] == 0x20; // ftypqt
+	bool ftypqt = ftyp(buf) && buf[8] == 0x71 && buf[9] == 0x74 && buf[10] == 0x20 && buf[11] == 0x20; // ftypqt  
 	bool moov = buf[4] == 0x6D && buf[5] == 0x6F && buf[6] == 0x6F && buf[7] == 0x76; // moov
 	bool free = buf[4] == 0x66 && buf[5] == 0x72 && buf[6] == 0x65 && buf[7] == 0x65; // free
 	return ftypqt || moov || free;
@@ -144,14 +159,12 @@ static bool webp(uint8_t *buf) {
 
 // HEIC Image
 static bool heic(uint8_t *buf) {
-	return buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70    // ftyp
-		&& buf[8] == 0x68 && buf[9] == 0x65 && buf[10] == 0x69 && buf[11] == 0x63; // heic
+	return ftyp(buf) && buf[8] == 0x68 && buf[9] == 0x65 && buf[10] == 0x69 && buf[11] == 0x63; // heic
 }
 
 // AVIF Image
 static bool avif(uint8_t *buf) {
-	return buf[4] == 0x66 && buf[5] == 0x74 && buf[6] == 0x79 && buf[7] == 0x70    // ftyp
-		&& buf[8] == 0x61 && buf[9] == 0x76 && buf[10] == 0x69 && buf[11] == 0x66; // avif
+	return ftyp(buf) && buf[8] == 0x61 && buf[9] == 0x76 && buf[10] == 0x69 && buf[11] == 0x66; // avif
 }
 
 // JPEG Image
@@ -170,7 +183,7 @@ static bool jpeg2(uint8_t *buf) {
 
 // JPEG-XL Image
 static bool jpgxl(uint8_t *buf) {
-	bool kxl = buf[0] == 0xFF && buf[0] == 0x0A;
+	bool kxl = buf[0] == 0xFF && buf[1] == 0x0A;
 	bool jxl = buf[0] == 0x00 && buf[1] == 0x00 && buf[2] == 0x00 && buf[3] == 0x0C
 		&& buf[4] == 0x4A && buf[5] == 0x58 && buf[6] == 0x4C && buf[7] == 0x20
 		&& buf[8] == 0x0D && buf[9] == 0x0A && buf[10] == 0x87 && buf[11] == 0x0A;
@@ -223,6 +236,8 @@ const struct FileTypeData fileTypeDb[FILEDBLEN] = {
 	{ webm,  28, ".webm"  },
 	{ mkv,   32, ".mkv"   },
 	{ m4v,   12, ".m4v"   },
+	{ tgp,   11, ".3gp"   },
+	{ tg2,   11, ".3g2"   },
 	{ mov,   12, ".mov"   },
 	{ flv,    3, ".flv"   },
 	{ mpeg,   4, ".mpeg"  },
