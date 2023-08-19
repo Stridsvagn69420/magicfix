@@ -1,5 +1,4 @@
-# CMake
+# CMake and Visual Studio
 /build/
-
-# Visual Studio
+/out/
 /.vs/
