@@ -5,7 +5,7 @@ File signatures are from both [Wikipedia](https://en.wikipedia.org/wiki/List_of_
 The tool only depends on the C Standard Libraries so it practically compiles anywhere, even on your phone! (I'm not joking)
 
 ## Installation
-This section is only about self-compilation. Check the [Release Page](releases) for prebuilt binaries.
+This section is only about self-compilation. Check the [Release Page](/releases) for prebuilt binaries.
 
 ### Windows (MSVC)
 WIP.
