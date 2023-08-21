@@ -24,4 +24,14 @@ struct FileTypeData {
 #define MAXREQBUFSIZE 32 // Maximum required buffer size
 extern const struct FileTypeData magicfix_database[FILEDBLEN];
 
+/// @brief File Header Matcher
+/// @param filedata File Data (Must be at least MAXREQBUFSIZE large)
+/// @return Position in magicfix_database, -1 if not found.
+int magicfix_match(uint8_t* filedata);
+
+/// @brief File Matcher Wrapper
+/// @param path String
+/// @return Position in magicfix_database, -1 if not found, -2 if stream error, -3 if file could not be opened.
+int magicfix_matchfile(char* path);
+
 #endif

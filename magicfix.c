@@ -264,18 +264,33 @@ const struct FileTypeData magicfix_database[FILEDBLEN] = {
 /// @param filedata File Data (Must be at least MAXREQBUFSIZE large)
 /// @return Position in magicfix_database, -1 if not found.
 int magicfix_match(uint8_t* filedata) {
-    for (size_t i = 0; i < FILEDBLEN; i++) {
-        if (magicfix_database[i].match(filedata)) {
+	for (size_t i = 0; i < FILEDBLEN; i++) {
+		if (magicfix_database[i].match(filedata)) {
 			return i;
 		}
 	}
-    return -1;
+	return -1;
 }
 
-/// @brief File Matcher
-/// @return Position in magicfix_database, -1 if not found.
+/// @brief File Matcher Wrapper
+/// @param path String
+/// @return Position in magicfix_database, -1 if not found, -2 if stream error, -3 if file could not be opened.
 int magicfix_matchfile(char* path) {
-    uint8_t filedata[MAXREQBUFSIZE] = {0};
-    FILE* fp = fopen(path, "rb");
-    return 0;
+	// Open File
+	FILE* fp = fopen(path, "rb");
+	if (fp == NULL) {
+		return -3;
+	}
+
+	// Read File
+	uint8_t filedata[MAXREQBUFSIZE] = {0};
+	fread(&filedata, sizeof(uint8_t), MAXREQBUFSIZE, fp);
+	if (ferror(fp)) {
+		fclose(fp);
+		return -2;
+	}
+	fclose(fp);
+
+	// Match File
+	return magicfix_match(filedata);
 }
