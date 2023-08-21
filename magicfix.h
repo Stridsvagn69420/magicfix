@@ -1,11 +1,12 @@
-#ifndef MAGICFIX_GLOBAL_H
-#define MAGICFIX_GLOBAL_H
+#ifndef MAGICFIX_H
+#define MAGICFIX_H
 
 // C Standard Library
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 
-// char-Array Length Macro
+// uint8_t-Array Length Macro
 #define BUFLEN(x) (sizeof(x) / sizeof(uint8_t))
 
 // Matcher function
@@ -21,6 +22,6 @@ struct FileTypeData {
 // File Database
 #define FILEDBLEN 34     // File Database Length
 #define MAXREQBUFSIZE 32 // Maximum required buffer size
-extern const struct FileTypeData fileTypeDb[FILEDBLEN];
+extern const struct FileTypeData magicfix_database[FILEDBLEN];
 
 #endif

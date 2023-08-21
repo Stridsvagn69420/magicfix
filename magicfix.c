@@ -92,10 +92,10 @@ static bool m4v(uint8_t *buf) {
 
 // 3GPP Video
 static bool tgp(uint8_t *buf) {
-	return ftyp(buf) && buf[8] == 0x33 && buf[9] == 0x67 && buf[10] == 0x70; // 3g2
+	return ftyp(buf) && buf[8] == 0x33 && buf[9] == 0x67 && buf[10] == 0x70; // 3gp
 }
 
-// 3GPP Video
+// 3GPP2 Video
 static bool tg2(uint8_t *buf) {
 	return ftyp(buf) && buf[8] == 0x33 && buf[9] == 0x67 && buf[10] == 0x32; // 3g2
 }
@@ -223,7 +223,7 @@ static bool tiff(uint8_t *buf) {
 }
 
 /// @brief File Database
-const struct FileTypeData fileTypeDb[FILEDBLEN] = {
+const struct FileTypeData magicfix_database[FILEDBLEN] = {
 	{ wav,   12, ".wav"   },
 	{ flac,   4, ".flac"  },
 	{ ogg,    4, ".ogg"   },
@@ -260,4 +260,22 @@ const struct FileTypeData fileTypeDb[FILEDBLEN] = {
 	{ tiff,   4, ".tiff"  }
 };
 
-// TODO: MAYBE add wrapper utils here, maybe not neccesary
+/// @brief File Header Matcher
+/// @param filedata File Data (Must be at least MAXREQBUFSIZE large)
+/// @return Position in magicfix_database, -1 if not found.
+int magicfix_match(uint8_t* filedata) {
+    for (size_t i = 0; i < FILEDBLEN; i++) {
+        if (magicfix_database[i].match(filedata)) {
+			return i;
+		}
+	}
+    return -1;
+}
+
+/// @brief File Matcher
+/// @return Position in magicfix_database, -1 if not found.
+int magicfix_matchfile(char* path) {
+    uint8_t filedata[MAXREQBUFSIZE] = {0};
+    FILE* fp = fopen(path, "rb");
+    return 0;
+}
