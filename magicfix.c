@@ -23,7 +23,8 @@ static bool ogg(const uint8_t* buf) {
 
 // OGG Opus Audio
 static bool opus(const uint8_t* buf) {
-	return ogg(buf) && buf[28] == 0x4F && buf[29] == 0x70 && buf[30] == 0x75 && buf[31] == 0x73 && buf[32] == 0x48 && buf[33] == 0x65 && buf[34] == 0x61 && buf[35] == 0x64; // OpusHead
+	return ogg(buf) && buf[28] == 0x4F && buf[29] == 0x70 && buf[30] == 0x75 && buf[31] == 0x73
+	&& buf[32] == 0x48 && buf[33] == 0x65 && buf[34] == 0x61 && buf[35] == 0x64; // OpusHead
 }
 
 // MP3 Audio
@@ -226,8 +227,8 @@ static bool tiff(const uint8_t* buf) {
 const struct FileTypeData magicfix_database[FILEDBLEN] = {
 	{ wav,   12, ".wav"   },
 	{ flac,   4, ".flac"  },
-	{ ogg,    4, ".ogg"   },
 	{ opus,  36, ".opus"  },
+	{ ogg,    4, ".ogg"   },
 	{ mp3,    3, ".mp3"   },
 	{ aac,    2, ".aac"   },
 	{ m4a,   12, ".m4a"   },
