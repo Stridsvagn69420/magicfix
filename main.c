@@ -3,20 +3,26 @@
 #include <string.h>
 #include "magicfix.h"
 
+// Colors
 #define RED "\x1B[31m"
 #define YEL "\x1B[33m"
 #define BLU   "\x1B[34m"
 #define MAG   "\x1B[35m"
+#define CYN   "\x1B[36m"
 #define RESET "\x1B[0m"
 
 int main(int argc, char **argv) {
-	// Check for arguments
+	// Print Metadata
 	if (argc < 2) {
-		printf("Please append a file!\n");
-		return EXIT_FAILURE;
+		printf("%smagicfix - Command-line tool to repair your file extensions%s\n", MAG, RESET);
+		printf("%sVersion:%s %s\n", CYN, RESET, MAGICFIX_VERSION);
+		printf("%sGitHub:%s %s\n", CYN, RESET, MAGICFIX_GITHUB);
+		printf("%sAuthor:%s %s\n", CYN, RESET, MAGICFIX_AUTHOR);
+		printf("%sLicense:%s %s\n", CYN, RESET, MAGICFIX_LICENSE);
+		return EXIT_SUCCESS;
 	}
 
-	// Invoke Wrapper
+	// Iterate over Command-Line Args
 	int status = 0;
 	for (size_t i = 1; i < argc; i++) {
 		int res = magicfix_matchfile(argv[i]);
@@ -39,9 +45,9 @@ int main(int argc, char **argv) {
 		default:
 			char* ext = magicfix_database[res].ext;
 			if (magicfix_rename(argv[i], ext) == 0) {
-				printf("%sSuccessfully changed file extension to %s%s%s\n", BLU, MAG, ext, RESET);
+				printf("%sSuccessfully changed to %s%s%s\n", BLU, MAG, ext, RESET);
 			} else {
-				fprintf("%sCould not change file extension to %s%s%s\n", RED, YEL, ext, RESET);
+				fprintf("%sCould not change to %s%s%s\n", RED, YEL, ext, RESET);
 			}
 		}
 	}
