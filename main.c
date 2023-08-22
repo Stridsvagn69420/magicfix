@@ -3,7 +3,13 @@
 #include <string.h>
 #include "magicfix.h"
 
-int main(int argc, char** argv) {
+#define RED "\x1B[31m"
+#define YEL "\x1B[33m"
+#define BLU   "\x1B[34m"
+#define MAG   "\x1B[35m"
+#define RESET "\x1B[0m"
+
+int main(int argc, char **argv) {
 	// Check for arguments
 	if (argc < 2) {
 		printf("Please append a file!\n");
@@ -11,23 +17,33 @@ int main(int argc, char** argv) {
 	}
 
 	// Invoke Wrapper
-	int res = magicfix_matchfile(argv[1]);
-	switch (res) {
+	int status = 0;
+	for (size_t i = 1; i < argc; i++) {
+		int res = magicfix_matchfile(argv[i]);
+		switch (res) {
 		case -3:
-			fprintf(stderr, "Failed to open %s\n", argv[1]);
+			fprintf(stderr, "%sFailed to open %s%s%s\n", RED, YEL, argv[i], RESET);
+			status = EXIT_FAILURE;
 			break;
 
 		case -2:
-			fprintf(stderr, "Failed to read from File Stream\n");
+			fprintf(stderr, "%sFailed to read from File Stream%s\n", RED, RESET);
+			status = EXIT_FAILURE;
 			break;
 
 		case -1:
-			fprintf(stderr, "File is of unknown type\n");
+			fprintf(stderr, "%sFile is of %sUnknown Type%s\n", RED, YEL, RESET);
+			status = EXIT_FAILURE;
 			break;
 
 		default:
-			printf("Extension: %s\n", magicfix_database[res].ext);
-			return EXIT_SUCCESS;
+			char* ext = magicfix_database[res].ext;
+			if (magicfix_rename(argv[i], ext) == 0) {
+				printf("%sSuccessfully changed file extension to %s%s%s\n", BLU, MAG, ext, RESET);
+			} else {
+				fprintf("%sCould not change file extension to %s%s%s\n", RED, YEL, ext, RESET);
+			}
+		}
 	}
-	return EXIT_FAILURE;
+	return EXIT_SUCCESS;
 }
