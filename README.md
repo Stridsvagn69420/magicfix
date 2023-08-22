@@ -37,7 +37,7 @@ This section is only about self-compilation. Check the [Release Page](https://gi
 5. Build the Project with `Ctrl` + `B`
 6. The tool is located at `./out/build/{build-target}/magicfix.exe`
 
-### Windows (Cygwin/MSYS2) and Unix
+### Windows (MSYS2, any environment) and Unix
 #### Requirements:
 - `cmake`
 - `make`
