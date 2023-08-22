@@ -42,8 +42,8 @@ int main(int argc, char **argv) {
 			status = EXIT_FAILURE;
 			break;
 
-		default:
-			char* ext = magicfix_database[res].ext;
+		default:;
+			uint8_t* ext = magicfix_database[res].ext;
 			if (magicfix_rename(argv[i], ext) == 0) {
 				printf("%sSuccessfully changed to %s%s%s\n", BLU, MAG, ext, RESET);
 			} else {
