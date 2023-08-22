@@ -13,11 +13,8 @@
 #include <stdio.h>
 #include <string.h>
 
-// uint8_t-Array Length Macro
-#define BUFLEN(x) (sizeof(x) / sizeof(uint8_t))
-
 // Matcher function
-typedef bool (*Matcher)(uint8_t *buf);
+typedef bool (*Matcher)(const uint8_t* buf);
 
 // File Database Entry
 struct FileTypeData {
