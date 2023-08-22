@@ -23,33 +23,31 @@ int main(int argc, char **argv) {
 	}
 
 	// Iterate over Command-Line Args
-	int status = 0;
+	int status = 1;
 	for (size_t i = 1; i < argc; i++) {
 		int res = magicfix_matchfile(argv[i]);
 		switch (res) {
 		case -3:
 			fprintf(stderr, "%sFailed to open %s%s%s\n", RED, YEL, argv[i], RESET);
-			status = EXIT_FAILURE;
 			break;
 
 		case -2:
 			fprintf(stderr, "%sFailed to read from File Stream%s\n", RED, RESET);
-			status = EXIT_FAILURE;
 			break;
 
 		case -1:
 			fprintf(stderr, "%sFile is of %sUnknown Type%s\n", RED, YEL, RESET);
-			status = EXIT_FAILURE;
 			break;
 
 		default:;
 			uint8_t* ext = magicfix_database[res].ext;
 			if (magicfix_rename(argv[i], ext) == 0) {
 				printf("%sSuccessfully changed to %s%s%s\n", BLU, MAG, ext, RESET);
+				status = EXIT_SUCCESS;
 			} else {
 				fprintf(stderr, "%sCould not change to %s%s%s\n", RED, YEL, ext, RESET);
 			}
 		}
 	}
-	return EXIT_SUCCESS;
+	return status;
 }
