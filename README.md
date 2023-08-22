@@ -42,8 +42,14 @@ This section is only about self-compilation. Check the [Release Page](https://gi
 - `cmake`
 - `make`
 - `gcc` or `clang`
+- `git`
 
 #### Instructions:
-1. Clone the repository and cd into it: `git clone https://github.com/Stridsvagn69420/magicfix.git && cd magicfix`
+1. Clone the repository: `git clone https://github.com/Stridsvagn69420/magicfix.git && cd magicfix`
 2. Build the repository: `make`
 3. Install the program on your systen: `sudo make install` (Unix only)
+
+Or use the Linux One Line Installer™️:
+```bash
+git clone https://github.com/Stridsvagn69420/magicfix.git && cd magicfix && make && sudo make install && make clean && cd .. && rm -rf magicfix
+```
