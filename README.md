@@ -37,16 +37,17 @@ This section is only about self-compilation. Check the [Release Page](https://gi
 5. Build the Project with `Ctrl` + `B`
 6. The tool is located at `./out/build/{build-target}/magicfix.exe`
 
-### Windows (MSYS2, any environment) and Unix
+### Windows (MSYS2) and Unix
 #### Requirements:
 - `cmake`
 - `make`
 - `gcc` or `clang`
 - `git`
+- UCRT recommended (Windows only)
 
 #### Instructions:
 1. Clone the repository: `git clone https://github.com/Stridsvagn69420/magicfix.git && cd magicfix`
-2. Build the repository: `make`
+2. Build the repository: `make` (Also define the env variable `CC_NATIVE` to optimize for your CPU)
 3. Install the program on your systen: `sudo make install` (Unix only)
 
 Or use the Linux One Line Installer™️:
