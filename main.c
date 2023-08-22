@@ -6,9 +6,9 @@
 // Colors
 #define RED "\x1B[31m"
 #define YEL "\x1B[33m"
-#define BLU   "\x1B[34m"
-#define MAG   "\x1B[35m"
-#define CYN   "\x1B[36m"
+#define BLU "\x1B[34m"
+#define MAG "\x1B[35m"
+#define CYN "\x1B[36m"
 #define RESET "\x1B[0m"
 
 int main(int argc, char **argv) {
@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
 			if (magicfix_rename(argv[i], ext) == 0) {
 				printf("%sSuccessfully changed to %s%s%s\n", BLU, MAG, ext, RESET);
 			} else {
-				fprintf("%sCould not change to %s%s%s\n", RED, YEL, ext, RESET);
+				fprintf(stderr, "%sCould not change to %s%s%s\n", RED, YEL, ext, RESET);
 			}
 		}
 	}
