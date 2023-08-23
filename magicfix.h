@@ -19,8 +19,9 @@ typedef bool (*Matcher)(const uint8_t* buf);
 // File Database Entry
 struct FileTypeData {
 	Matcher match; // Buffer Matcher
-	const uint8_t minbuf;  // Minimum Buffer Size
-	const uint8_t *ext;    // File Extension
+	const uint8_t minbuf; // Minimum Buffer Size
+	const uint8_t *extv;  // Primary (Video) File Extension
+	const uint8_t *exta;  // Secondary (Video) File Extension
 };
 
 // File Database

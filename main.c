@@ -22,25 +22,29 @@ int main(int argc, char **argv) {
 		return EXIT_SUCCESS;
 	}
 
+	// Audio-Flag
+	bool audio = (strcmp(argv[1], "--audio")) ? false : true;
+	if (argc < 3 && audio) {
+		fprintf(stderr, "%sPlease provide files to fix!%s\n", RED, RESET);
+		return EXIT_FAILURE;
+	}
+
 	// Iterate over Command-Line Args
 	int status = 1;
-	for (size_t i = 1; i < argc; i++) {
+	for (size_t i = (audio ? 2 : 1); i < argc; i++) {
 		int res = magicfix_matchfile(argv[i]);
 		switch (res) {
 		case -3:
+		case -2:
 			fprintf(stderr, "%sFailed to open %s%s%s\n", RED, YEL, argv[i], RESET);
 			break;
 
-		case -2:
-			fprintf(stderr, "%sFailed to read from File Stream%s\n", RED, RESET);
-			break;
-
 		case -1:
-			fprintf(stderr, "%sFile is of %sUnknown Type%s\n", RED, YEL, RESET);
+			fprintf(stderr, "%sFile is of %sUnknown Type%s\n", CYN, RED, RESET);
 			break;
 
 		default:;
-			uint8_t* ext = magicfix_database[res].ext;
+			uint8_t* ext = (audio && magicfix_database[res].exta != NULL) ? magicfix_database[res].exta : magicfix_database[res].extv;
 			if (magicfix_rename(argv[i], ext) == 0) {
 				printf("%sSuccessfully changed to %s%s%s\n", BLU, MAG, ext, RESET);
 				status = EXIT_SUCCESS;
