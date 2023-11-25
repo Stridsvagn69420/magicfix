@@ -223,8 +223,14 @@ static bool tiff(const uint8_t* buf) {
 	return le || be;
 }
 
+// 7-Zip
+static bool zip7(const uint8_t* buf) {
+	return buf[0] == 0x37 && buf[1] == 0x7A && buf[2] == 0xBC && buf[3] == 0xAF && buf[4] == 0x27 && buf[6] == 0x1C;
+}
+
 /// @brief File Database
 const struct FileTypeData magicfix_database[FILEDBLEN] = {
+	{ zip7,   6, ".7z",    NULL   },
 	{ wav,   12, ".wav",   NULL   },
 	{ flac,   4, ".flac",  NULL   },
 	{ opus,  36, ".opus",  NULL   },

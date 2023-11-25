@@ -25,7 +25,7 @@ struct FileTypeData {
 };
 
 // File Database
-#define FILEDBLEN 34     // File Database Length
+#define FILEDBLEN 35     // File Database Length
 #define MAXREQBUFSIZE 36 // Maximum required buffer size
 extern const struct FileTypeData magicfix_database[FILEDBLEN];
 
