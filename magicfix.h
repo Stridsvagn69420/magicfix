@@ -2,7 +2,7 @@
 #define MAGICFIX_H
 
 // Magicfix Metadata
-#define MAGICFIX_VERSION "v1.0.0"
+#define MAGICFIX_VERSION "v1.0.1"
 #define MAGICFIX_GITHUB "https://github.com/Stridsvagn69420/magicfix"
 #define MAGICFIX_AUTHOR "Stridsvagn69420"
 #define MAGICFIX_LICENSE "EUPL-1.2"

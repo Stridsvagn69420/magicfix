@@ -225,7 +225,7 @@ static bool tiff(const uint8_t* buf) {
 
 // 7-Zip
 static bool zip7(const uint8_t* buf) {
-	return buf[0] == 0x37 && buf[1] == 0x7A && buf[2] == 0xBC && buf[3] == 0xAF && buf[4] == 0x27 && buf[6] == 0x1C;
+	return buf[0] == 0x37 && buf[1] == 0x7A && buf[2] == 0xBC && buf[3] == 0xAF && buf[4] == 0x27 && buf[5] == 0x1C;
 }
 
 /// @brief File Database
