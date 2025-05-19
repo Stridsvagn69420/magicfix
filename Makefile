@@ -11,7 +11,10 @@ debug:
 	@cmake --build $(OUTDIR) --config Debug
 
 install:
-	@cp $(OUTDIR)/$(APPNAME) $(INSTALLDIR)/$(APPNAME)
+	@install -m755 $(OUTDIR)/$(APPNAME) $(INSTALLDIR)/$(APPNAME)
+
+uninstall:
+	@rm $(INSTALLDIR)/$(APPNAME)
 
 clean:
 	@rm -r $(OUTDIR)
